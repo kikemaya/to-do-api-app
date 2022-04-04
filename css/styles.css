@@ -3,3 +3,102 @@
     padding: 0;
     box-sizing: border-box;
 }
+html {
+    font-size: 10px;
+}
+li {
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;    
+    font-size: 16px;    
+}
+.to-container {
+    margin-top: calc(20vh);
+    width: 600px;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6rem;
+}
+.to-container__heading {
+    background-color: lightgray;
+    font-size: 2.5rem;
+}
+.to-container__heading p, .to-container__content {
+    padding: 20px;    
+}
+.to-container__content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+.to-container__content__add-box {
+    display: flex;
+    align-items: stretch;
+    height: 50px;
+    justify-content: space-between;
+}
+.to-container__content__intext {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    border-radius: 0px;
+    border-radius: 5px 0px 0px 5px;
+}
+.to-container__content__btn {
+    font-size: 1.6rem;
+    width: 100px;
+    background-color: #0d6efd;
+    color: white;
+    height: 100%;
+    border-style: none;
+    border-radius: 0px 5px 5px 0px;
+    cursor: pointer;
+    transition: all;
+}
+.to-container__content__btn:hover, .to-container__content__list li button:hover {
+    filter: brightness(75%);
+    transition-duration: .3s;
+}
+.to-container__content__list li {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+}
+.to-container__content__list__btnwrapper {
+    display: flex;
+    gap: 20px;
+}
+.to-container__content__list li button{
+    width: 70px;
+    height: 40px;
+    font-size: 1.6rem;
+    background-color: red;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+}
+.to-container__content__list li button:first-child{
+    background-color: green;
+}
+.to-container__content__list li:nth-child(odd){
+    background-color: lightgray;
+}
+@media only screen and (max-width: 650px) {
+    .to-container {
+        width: 90%;
+    }
+    .to-container__content__list li {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+}
