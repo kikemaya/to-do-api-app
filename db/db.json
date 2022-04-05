@@ -1,16 +1,3 @@
 {
-    "data": [
-        {
-            "id": 1,
-            "task" : "Hola"
-        },
-        {
-            "id": 1,
-            "task" : "Hola"
-        },
-        {
-            "id": 1,
-            "task" : "Hola"
-        }
-    ]
+  "data": []
 }
