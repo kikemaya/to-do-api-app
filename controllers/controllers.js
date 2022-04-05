@@ -7,8 +7,14 @@ const submitTask = d.getElementById('submit-task')
 const list = d.getElementById('list')
 const hidden = d.getElementById('hidden')
 
-const getAll = async () => {
+const cleanInputTask = () => {
+    hidden.value = ""
+    inputTask.value = ""
+    location.reload()
+}
 
+const getAll = async () => {
+//Crear alerta(errores) y pop up(aviso/delete)
     try {
         let res = await fetch("http://localhost:3000/data")
         let json = await res.json();
@@ -23,7 +29,7 @@ const getAll = async () => {
         };
 
         json.forEach(el => {
-            // console.log(el.id);
+            
             list.innerHTML += `<li>
                                 ${el.task}
                                <div class='to-container__content__list__btnwrapper'>
@@ -31,14 +37,13 @@ const getAll = async () => {
                                     <button class="delete" data-id="${el.id}" data-task="${el.task}">&cross;</button>
                                 </div>
                                 </li>`
-        });
 
-        return json;
+        });
 
     } catch (err) {
         let message = err.statusText || "Ocurriò un error";
         return console.log(err.status, message);
-        // $table.insertAdjacentElement("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
+        
     }
 
 }
@@ -46,16 +51,16 @@ const getAll = async () => {
 d.addEventListener("DOMContentLoaded", getAll)
 
 submitTask.addEventListener("click", async e => {
+
     if(e.target === submitTask && inputTask.value != '') {
-        //  Create - POST
+
         if (!hidden.value) {
-            console.log(e.target.dataset.id);
+
             try {
                 
                 let options = {
                     method: "POST",
                     headers: {
-                        //Las cabeceras determinan el tipo de formato que se espera recibir para la interaccion con la API
                         "Content-type" : "application/json; charset=utf-8" 
                     },
                     body: JSON.stringify({
@@ -68,9 +73,7 @@ submitTask.addEventListener("click", async e => {
     
                 if (!res.ok) throw { status: res.status, statusText: res.statusText };
                 
-                hidden.value = ""
-                inputTask.value = ""
-                location.reload()
+                cleanInputTask()
     
             } catch (err) {
                 let message = err.statusText || "Ocurriò un error";
@@ -83,7 +86,7 @@ submitTask.addEventListener("click", async e => {
                 let options = {
                     method: "PUT",
                     headers: {
-                        //Las cabeceras determinan el tipo de formato que se espera recibir para la interaccion con la API
+                        
                         "Content-type" : "application/json; charset=utf-8" 
                     },
                     body: JSON.stringify({
@@ -96,9 +99,7 @@ submitTask.addEventListener("click", async e => {
     
                 if (!res.ok) throw { status: res.status, statusText: res.statusText };
                 
-                inputTask.value = ""
-                hidden.value = ""
-                location.reload();
+                cleanInputTask()
     
             } catch (err) {
                 let message = err.statusText || "Ocurriò un error";
@@ -121,15 +122,15 @@ d.addEventListener("click", async e => {
     }
     if (e.target.matches(".delete")) {
 
-        let isDelete = confirm(`¿Estàs seguro de eliminar el id ${e.target.dataset.id}?`);
+        let isDelete = confirm(`¿Estàs seguro de eliminar esta tarea?`);
 
         if (isDelete) {
-            //Delete - DELETE
+        
             try {
                 let options = {
                     method: "DELETE",
                     headers: {
-                        //Las cabeceras determinan el tipo de formato que se espera recibir para la interaccion con la API
+                        
                         "Content-type" : "application/json; charset=utf-8" 
                     }                            
                 },

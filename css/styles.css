@@ -1,10 +1,18 @@
+:root {
+    --lightgray-bg: lightgray;
+    --blue-btn-info: #0d6efd;
+    --red-btn-danger: #dc3545;
+    --green-btn-success: #198754;
+    --font-s-root: 10px;
+    --font-s-body: 16px
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 html {
-    font-size: 10px;
+    font-size: var(--font-s-root);
 }
 li {
     list-style-type: none;
@@ -14,19 +22,19 @@ a {
 }
 body {
     font-family: Arial, Helvetica, sans-serif;    
-    font-size: 16px;    
+    font-size: var(--font-s-body);    
 }
 .to-container {
     margin-top: calc(20vh);
     width: 600px;
-    border: 1.5px solid lightgray;
+    border: 1.5px solid var(--lightgray-bg);
     border-radius: 5px;
     margin-left: 50%;
     transform: translateX(-50%);
     margin-bottom: 6rem;
 }
 .to-container__heading {
-    background-color: lightgray;
+    background-color: var(--lightgray-bg);
     font-size: 2.5rem;
 }
 .to-container__heading p, .to-container__content {
@@ -43,17 +51,17 @@ body {
     height: 50px;
     justify-content: space-between;
 }
-.to-container__content__intext {
+.to-container__content__add-box__intext {
     width: 100%;
     padding: 1.5rem;
     font-size: 1.6rem;
     border-radius: 0px;
     border-radius: 5px 0px 0px 5px;
 }
-.to-container__content__btn {
+.to-container__content__add-box__btn {
     font-size: 1.6rem;
     width: 100px;
-    background-color: #0d6efd;
+    background-color: var(--blue-btn-info);
     color: white;
     height: 100%;
     border-style: none;
@@ -61,7 +69,7 @@ body {
     cursor: pointer;
     transition: all;
 }
-.to-container__content__btn:hover, .to-container__content__list li button:hover {
+.to-container__content__add-box__btn:hover, .to-container__content__list li button:hover {
     filter: brightness(75%);
     transition-duration: .3s;
 }
@@ -80,17 +88,18 @@ body {
     width: 70px;
     height: 40px;
     font-size: 1.6rem;
-    background-color: red;
+    background-color: var(--red-btn-danger);
     border: none;
     border-radius: 0.5rem;
     color: white;
     cursor: pointer;
+    transition: all;
 }
 .to-container__content__list li button:first-child{
-    background-color: green;
+    background-color: var(--green-btn-success);
 }
 .to-container__content__list li:nth-child(odd){
-    background-color: lightgray;
+    background-color: var(--lightgray-bg);
 }
 @media only screen and (max-width: 650px) {
     .to-container {

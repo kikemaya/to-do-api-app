@@ -8,20 +8,23 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
+    
     <div class="to-container">
         <div class="to-container__heading">
             <p>To dos <span id="title-heading"></span></p>
         </div>
         <div class="to-container__content">
             <div class="to-container__content__add-box">
-                <input type="text" name="" id="input-task" placeholder="Enter your task here." class="to-container__content__intext">
-                <button class="to-container__content__btn" id="submit-task">Add</button>
+                <input type="text" class="to-container__content__add-box__intext" id="input-task" placeholder="Enter your task here.">
+                <button class="to-container__content__add-box__btn" id="submit-task">Add</button>
                 <input type="hidden" id="hidden">
             </div>
 
             <ul class="to-container__content__list" id="list"></ul>
         </div>
     </div>
+
     <script src="./controllers/controllers.js"></script>
+
 </body>
 </html>
