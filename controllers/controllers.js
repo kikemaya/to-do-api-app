@@ -1,150 +1,197 @@
 'use strict'
-    
-const d = document
-const titleHeading = d.getElementById('title-heading')
-const inputTask = d.getElementById('input-task')
-const submitTask = d.getElementById('submit-task')
-const list = d.getElementById('list')
-const hidden = d.getElementById('hidden')
 
-const cleanInputTask = () => {
-    hidden.value = ""
-    inputTask.value = ""
-    location.reload()
+const D = document
+const TITLE_HEADING = D.getElementById('title-heading')
+const INPUT_TASK = D.getElementById('input-task')
+const SUBMIT_TASK = D.getElementById('submit-task')
+const LIST = D.getElementById('list')
+const HIDDEN = D.getElementById('hidden')
+const A_WARNING = D.getElementById('a-warning')
+const A_ERROR = D.getElementById('a-error')
+
+const fare = () => {
+
+    return Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    })
+    .then((res) => res)
+
 }
 
-const getAll = async () => {
-//Crear alerta(errores) y pop up(aviso/delete)
+const CLEAN_INPUT_TASK = () => {
+
+    HIDDEN.value = ''
+    INPUT_TASK.value = ''
+    location.reload()
+
+}
+
+const SHOW_ALERT_ERR = (err, msg) => {
+
+    let message = err.statusText || msg;
+    A_ERROR.classList.remove('hidden')
+    const parrafoErr = D.createElement('p')
+    parrafoErr.textContent = `${message} Estatus: ${err.status}.`
+    A_ERROR.appendChild(parrafoErr)
+    setTimeout(() => {
+        A_ERROR.classList.add('hidden')
+        A_ERROR.removeChild(parrafoErr)
+    }, 5000);
+
+}
+
+const GET_ALL = async () => {
+    
     try {
-        let res = await fetch("http://localhost:3000/data")
+        let res = await fetch('http://localhost:3000/data')
         let json = await res.json();
 
         let numberOfTask = json.length
 
-        titleHeading.textContent = `(${numberOfTask})`
+        TITLE_HEADING.textContent = `(${numberOfTask})`
 
         if (!res.ok) {
-            titleHeading.textContent = `(0)`
+            TITLE_HEADING.textContent = `(0)`
             throw { status: res.status, statusText: res.statusText }
         };
 
         json.forEach(el => {
+
+            const LI = D.createElement('li')
+            const LI_DIV = D.createElement('div')
             
-            list.innerHTML += `<li>
-                                ${el.task}
-                               <div class='to-container__content__list__btnwrapper'>
-                                    <button class="edit" data-id="${el.id}" data-task="${el.task}">edit</button>
-                                    <button class="delete" data-id="${el.id}" data-task="${el.task}">&cross;</button>
-                                </div>
-                                </li>`
+            const B_DIV = D.createElement('div')
+            const B_EDIT = D.createElement('button')
+            const B_DEL = D.createElement('button')
+
+            const LI_TEXT = D.createTextNode(`${el.task}`)
+            
+            B_DIV.classList.add('to-container__content__list__btnwrapper')
+            
+            LI_DIV.classList.add('container-li')
+            B_EDIT.classList.add('edit')
+            B_DEL.classList.add('delete')
+
+            B_EDIT.dataset.id = `${el.id}`
+            B_EDIT.dataset.task = `${el.task}`
+    
+            B_DEL.dataset.id = `${el.id}`
+            
+            B_EDIT.textContent = "edit"
+            B_DEL.textContent = "delete"
+
+            LI_DIV.appendChild(LI_TEXT)
+            B_DIV.append(B_EDIT, B_DEL)
+            
+            LI.append(LI_DIV, B_DIV)
+
+            LIST.append(LI)
 
         });
 
     } catch (err) {
-        let message = err.statusText || "Ocurriò un error";
-        return console.log(err.status, message);
-        
+        SHOW_ALERT_ERR(err, 'Ocurrió un error al traer los datos.')
     }
 
 }
 
-d.addEventListener("DOMContentLoaded", getAll)
+D.addEventListener('DOMContentLoaded', GET_ALL)
 
-submitTask.addEventListener("click", async e => {
+SUBMIT_TASK.addEventListener('click', async e => {
 
-    if(e.target === submitTask && inputTask.value != '') {
+    if (e.target === SUBMIT_TASK && INPUT_TASK.value != '') {
 
-        if (!hidden.value) {
+        if (!HIDDEN.value) {
 
             try {
-                
+
                 let options = {
                     method: "POST",
                     headers: {
-                        "Content-type" : "application/json; charset=utf-8" 
+                        "Content-type": "application/json; charset=utf-8"
                     },
                     body: JSON.stringify({
-                        "task": inputTask.value
+                        "task": INPUT_TASK.value
                     })
                 }
-                
-                let res = await fetch("http://localhost:3000/data", options)
+
+                let res = await fetch('http://localhost:3000/data', options)
                 await res.json();
-    
+
                 if (!res.ok) throw { status: res.status, statusText: res.statusText };
-                
-                cleanInputTask()
-    
+
+                CLEAN_INPUT_TASK()
+
             } catch (err) {
-                let message = err.statusText || "Ocurriò un error";
-                console.log(err.status, message);
-            } 
-            
+                SHOW_ALERT_ERR(err, 'Ocurrió un error al subir los datos.')
+            }
+
         } else {
 
-            try {  
+            try {
                 let options = {
                     method: "PUT",
                     headers: {
-                        
-                        "Content-type" : "application/json; charset=utf-8" 
+
+                        "Content-type": "application/json; charset=utf-8"
                     },
                     body: JSON.stringify({
-                        "task": inputTask.value
+                        "task": INPUT_TASK.value
                     })
                 }
-                
-                let res = await fetch(`http://localhost:3000/data/${hidden.value}`, options)
+
+                let res = await fetch(`http://localhost:3000/data/${HIDDEN.value}`, options)
                 await res.json();
-    
+
                 if (!res.ok) throw { status: res.status, statusText: res.statusText };
-                
-                cleanInputTask()
-    
+
+                CLEAN_INPUT_TASK()
+
             } catch (err) {
-                let message = err.statusText || "Ocurriò un error";
-                console.log(err.status, message);
-            } 
+                SHOW_ALERT_ERR(err, 'Ocurrió un error interno al editar los datos.')
+            }
         }
     }
 });
 
+D.addEventListener('click', async e => {
 
-d.addEventListener("click", async e => {
+    if (e.target.matches('.edit')) {
 
-    if (e.target.matches(".edit")) {
-    
-        submitTask.textContent = "Update"
-        inputTask.value = e.target.dataset.task
-        hidden.value = e.target.dataset.id
-        inputTask.focus()        
+        SUBMIT_TASK.textContent = 'Update'
+        INPUT_TASK.value = e.target.dataset.task
+        HIDDEN.value = e.target.dataset.id
+        INPUT_TASK.focus()
 
     }
-    if (e.target.matches(".delete")) {
+    if (e.target.matches('.delete')) {
 
-        let isDelete = confirm(`¿Estàs seguro de eliminar esta tarea?`);
+        try {
+            const IS_DELETED = await fare()
 
-        if (isDelete) {
-        
-            try {
+            if (IS_DELETED.isConfirmed) {
                 let options = {
                     method: "DELETE",
                     headers: {
-                        
-                        "Content-type" : "application/json; charset=utf-8" 
-                    }                            
-                },
-                res = await fetch(`http://localhost:3000/data/${e.target.dataset.id}`, options),
-                json = await res.json();
 
-                if (!res.ok) throw { status: res.status, statusText: res.statusText };
-                
-                location.reload();
-            } catch (err) {
-                let message = err.statusText || "Ocurriò un error";
-                console.log(err.status, message);
-                // $form.insertAdjacentElement("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
+                        "Content-type": "application/json; charset=utf-8"
+                    }
+                },
+                    res = await fetch(`http://localhost:3000/data/${e.target.dataset.id}`, options),
+                    json = await res.json();
+
+                if (!res.ok) throw { status: res.status, statusText: res.statusText }
             }
+
+        } catch (err) {
+            SHOW_ALERT_ERR(err, 'Ocurrió un error al seliminar los datos.')
         }
     }
+
 });

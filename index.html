@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>to Do App</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./assets/sweetalert2.css">
+    <script src="./assets/sweetalert2.js"></script>
 </head>
+
 <body>
-    
+
+    <div class="alert a-error hidden" id="a-error"></div>
+
+    <div class="alert a-warning hidden" id="a-warning">
+        <p>warning</p>
+    </div>
+
     <div class="to-container">
         <div class="to-container__heading">
             <p>To dos <span id="title-heading"></span></p>
         </div>
         <div class="to-container__content">
             <div class="to-container__content__add-box">
-                <input type="text" class="to-container__content__add-box__intext" id="input-task" placeholder="Enter your task here.">
+                <input type="text" class="to-container__content__add-box__intext" id="input-task"
+                    placeholder="Enter your task here.">
                 <button class="to-container__content__add-box__btn" id="submit-task">Add</button>
                 <input type="hidden" id="hidden">
             </div>
@@ -27,4 +38,5 @@
     <script src="./controllers/controllers.js"></script>
 
 </body>
+
 </html>

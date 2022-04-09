@@ -1,16 +1,3 @@
 {
-  "data": [
-    {
-      "task": "nueva task",
-      "id": 3
-    },
-    {
-      "task": "s",
-      "id": 4
-    },
-    {
-      "task": "ssss",
-      "id": 5
-    }
-  ]
+  "data": []
 }
